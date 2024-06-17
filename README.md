@@ -54,11 +54,11 @@ Thus we see that there is an obvious class imbalance and we need to resolve that
 
 Lets load all images and log their shapes. We need to check if any preprocessing is needed on the images before the are trained/evaluated. The below given histogram shows the distribution of the widths and heights of all the images.
 
-![histogram](assets\size_histogram.png)
+![histogram](assets/size_histogram.png)
 
 The images have arbitrary sizes and we need to resolve that problem before we train the images. Another additional point to be noted is that each image is in the CMYK format (4 channels). We can experiment further to see if we need to convert the format into something more feasible or not.
 
-We formulate a preprocessing approach using `torchvision` ’s transforms library which provides various transformations and preprocessing functions for images. To solve the issue of arbitrary sizes, we rescale our images to the mean width and mean height of all images. We will save these values for future use in a [json file](data\rescaling_config.json). The mean width and height values of our dataset are calculated are given below:
+We formulate a preprocessing approach using `torchvision` ’s transforms library which provides various transformations and preprocessing functions for images. To solve the issue of arbitrary sizes, we rescale our images to the mean width and mean height of all images. We will save these values for future use in a [json file](data/rescaling_config.json). The mean width and height values of our dataset are calculated are given below:
 
 - **Mean Width**: 711
 - **Mean Height**: 733
@@ -70,7 +70,7 @@ The rescaling is followed by Normalization while is necessary to bring all value
 
 Lastly we convert the rescaled and normalized images into Tensors and prepare the images in batches. An example of how the images look like before and after preprocessing:
 
-![preprocessing](assets\preprocessed_images.png)
+![preprocessing](assets/preprocessed_images.png)
 
 ### Data Splitting and Training Preparation
 
@@ -169,11 +169,11 @@ We observe the performance of the model with various values of learning rate, ba
 
 The below given graph shows the performance of the model in terms of the increase in accuracy and decrease in loss value.
 
-![accuracy and loss graphs](assets\performance_graph.png)
+![accuracy and loss graphs](assets/performance_graph.png)
 
 This shows that the model performs well with our specified hyperparameters. We also try to evaluate the model based on other evaluation metrics. Here we display the confusion matrix which helps us understand our model better.
 
-![confusion matrix](assets\confusion_matrix.png)
+![confusion matrix](assets/confusion_matrix.png)
 
 The model makes 39 mistakes when fed with 1152 validation examples. We can also note where the model predicts incorrectly and by how much
 
