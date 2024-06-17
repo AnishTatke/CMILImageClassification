@@ -1,6 +1,5 @@
 /public
 /env
-/data
+/data/*.csv
 /__pycache__
 
-cred.txt

@@ -1,0 +1,15 @@
+name: c:\Users\tatke\Projects\CMIL\env\cmil
+channels:
+  - nvidia
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python==3.10
+  - pytorch
+  - pytorch-cuda=11.8
+  - torchvision
+  - matplotlib
+  - pandas
+  - scikit-learn
+prefix: c:\Users\tatke\Projects\CMIL\env\cmil

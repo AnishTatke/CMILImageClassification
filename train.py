@@ -74,7 +74,7 @@ NUM_EPOCHS = 10
 print(f"Running on {device}")
 
 # Load the data
-if not os.path.exists('data/train.csv') and not os.path.exists('data/validate.csv'):
+if not os.path.exists('data/train.csv') and not os.path.exists('data/validate.csv') and not os.path.exists('data/rescaling_config.json'):
     load_data('public/public.csv')
 
 train_df = pd.read_csv('data/train.csv')

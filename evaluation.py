@@ -55,35 +55,38 @@ if __name__ == '__main__':
     if os.path.isdir(path):
         # Load the test data
         test = load_data(path)
+        
+        # Define the device and batch size
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        BATCH_SIZE = 32
+        config = json.load(open('data/rescaling_config.json', 'r'))
+
+        # Define the transformations
+        transforms = v2.Compose([
+            v2.ToTensor(),
+            v2.Resize((config['mean_width'], config['mean_height'])),
+            v2.Normalize(mean = [0.5 for _ in range(4)], std = [0.5 for _ in range(4)]),
+            v2.ToTensor(),
+        ])
+
+        # Create the test dataset
+        test_dataset = TestGlomeruliDataset(test, transform=transforms)
+
+        # Create the test loader
+        test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
+
+        # Load the model
+        model = SimpleCNN().to(device)
+        model.load_state_dict(torch.load('models/model.pth'))
+
+        # Evaluate the model
+        test = evaluate(model, test_loader)
+        test.drop('path', axis=1, inplace=True)
+
+        # Save the outputs in csv
+        test.to_csv('evaluation.csv', index=False)
     else:
         print("Invalid path")
+        
 
-    # Define the device and batch size
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    BATCH_SIZE = 32
-    config = json.load(open('data/rescaling_config.json', 'r'))
-
-    # Define the transformations
-    transforms = v2.Compose([
-        v2.ToTensor(),
-        v2.Resize((config['mean_width'], config['mean_height'])),
-        v2.Normalize(mean = [0.5 for _ in range(4)], std = [0.5 for _ in range(4)]),
-        v2.ToTensor(),
-    ])
-
-    # Create the test dataset
-    test_dataset = TestGlomeruliDataset(test, transform=transforms)
-
-    # Create the test loader
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
-
-    # Load the model
-    model = SimpleCNN().to(device)
-    model.load_state_dict(torch.load('models/model.pth'))
-
-    # Evaluate the model
-    test = evaluate(model, test_loader)
-    test.drop('path', axis=1, inplace=True)
-
-    # Save the outputs in csv
-    test.to_csv('evaluation.csv', index=False)
+    
