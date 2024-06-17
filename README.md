@@ -210,6 +210,7 @@ python train.py
 ```
 
 This will generate a `model.pth` file at the path [`models/`](models). The evaluation script uses the same model from this path to evaluate WSI images.
+Alternatively you can download the model from [Google Drive](https://drive.google.com/file/d/1LzNBrRKyZDF3nzxY5CMFZNX7cX6w9cLP/view?usp=sharing) and save it in the project directory under [`models/`](models) path.
 
 ## Other Experiments
 
