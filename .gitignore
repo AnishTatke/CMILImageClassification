@@ -1,0 +1,6 @@
+/public
+/env
+/data
+/__pycache__
+
+cred.txt
