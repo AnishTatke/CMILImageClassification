@@ -52,7 +52,7 @@ For code and analysis, please refer to [DataAnalysis](DataAnalysis.ipynb) for un
 
 Thus we see that there is an obvious class imbalance and we need to resolve that issue before or while we train the model on the given dataset.
 
-Lets load all images and log their shapes. We need to check if any preprocessing is needed on the images before the are trained/evaluated. The below given histogram shows the distribution of the widths and heights of all the images.
+Lets load all images and log their shapes. We need to check if any preprocessing is needed on the images before they are trained/evaluated. The below given histogram shows the distribution of the widths and heights of all the images.
 
 ![histogram](assets/size_histogram.png)
 
@@ -63,7 +63,7 @@ We formulate a preprocessing approach using `torchvision` ’s transforms librar
 - **Mean Width**: 711
 - **Mean Height**: 733
 
-The rescaling is followed by Normalization while is necessary to bring all values between a given mean and standard deviation. We normalize each image with
+The rescaling is followed by Normalization which is necessary to bring all values between a given mean and standard deviation. We normalize all images with
 
 - **Mean**: [0.5, 0.5, 0.5, 0.5]
 - **Standard Deviation**: [0.5, 0.5. 0.5 0.5]
@@ -144,7 +144,7 @@ The model architecture contains three convolution blocks, a flatten layer and th
     - **Convolutional Layer**: The convolutional layers [`nn.Conv2d`](https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html#torch.nn.Conv2d) performs various convolutional filters on the images. Each filter/kernel of specified size slides over the image with a given stride. We can also specify the number of filters to be used which is seen in the output of the layer as the number of channels.
     - **Batch Normalization**: This layer [`nn.BatchNorm2d`](https://pytorch.org/docs/stable/generated/torch.nn.BatchNorm2d.html#torch.nn.BatchNorm2d) is often used for normalizing the values in every batch. This helps the model evade from problems like exploding gradients and in-turn helps avoid overfitting over the training data.
     - **ReLU Activation**: We use the ReLU activation [`nn.ReLU`](https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html#torch.nn.ReLU) function in every intermediate convolution/fully connected block.
-    - **Average Pooling**: We perform average pooling [`nn.AvgPool2d`](https://pytorch.org/docs/stable/generated/torch.nn.AvgPool2d.html#torch.nn.AvgPool2d) using a 2x2 filter which reduces the size of the images by a factor of 2. In average pooling, a 2x2 filter slides over the images and the average value of the 2x2 values are replaced in the place of the position of the filter.
+    - **Average Pooling**: We perform average pooling [`nn.AvgPool2d`](https://pytorch.org/docs/stable/generated/torch.nn.AvgPool2d.html#torch.nn.AvgPool2d) using a 2x2 filter which reduces the size of the images by a factor of 2. In average pooling, a 2x2 filter slides over the images and the average value of the 2x2 selection is replaced in the place of the position of the selection.
 - Fully Connected Block: After the convolutions are done, the model flattens the output from the convolutional layers and builds a fully connected network over the flattened outputs.
     - **Linear Layers**: The Linear layer [`nn.Linear`](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html#torch.nn.Linear) defined the fully connected network in which each neuron performs the operation of
         
@@ -157,7 +157,7 @@ The model architecture contains three convolution blocks, a flatten layer and th
 
 ### Loss and Optimization
 
-The model is trained for 10 epochs while using the PyTorch’s [`nn.BCEWithLogitsLoss`](https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html#torch.nn.BCEWithLogitsLoss) . We choose the this loss function over the [`nn.BCELoss`](https://pytorch.org/docs/stable/generated/torch.nn.BCELoss.html#torch.nn.BCELoss), as the `nn.BCEWithLogitsLoss` is numerically more stable and combines the `sigmoid` with the `nn.BCELoss`. We also specify the `pos-weight`  parameter on the loss function initialization which helps us calculate a weighted loss to handle the class imbalance issue. The optimizer used is Adam optimizer and a learning rate of 1e-3 (0.001) is used.
+The model is trained for 10 epochs while using the PyTorch’s [`nn.BCEWithLogitsLoss`](https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html#torch.nn.BCEWithLogitsLoss) . We choose this loss function over the [`nn.BCELoss`](https://pytorch.org/docs/stable/generated/torch.nn.BCELoss.html#torch.nn.BCELoss), as the `nn.BCEWithLogitsLoss` is numerically more stable and combines the `sigmoid` with the `nn.BCELoss`. We also specify the `pos-weight`  parameter on the loss function initialization which helps us calculate a weighted loss to handle the class imbalance issue. The optimizer used is Adam optimizer and a learning rate of 1e-3 (0.001) is used.
 
 ## Training and Validation
 
@@ -180,7 +180,7 @@ The model makes 39 mistakes when fed with 1152 validation examples. We can also 
 - The model predicts 28 globally sclerotic glomeruli as non-globally sclerotic.
 - The model predicts 11 non-globally sclerotic glomeruli as globally sclerotic.
 
-We also use the `sklearn` ’s classification report to note important evaluation metrics like precision, recall and F1-score which help us observe the accuracy and completeness of positive predictions. This is really helpful to see while validating is class imbalance issue is resolved correctly or not.
+We also use the `sklearn` ’s classification report to note important evaluation metrics like precision, recall and F1-score which help us observe the accuracy and completeness of positive predictions. This is really helpful to see if issues like class imbalance are resolved correctly or not.
 
 ```text
                                   precision    recall  f1-score   support
